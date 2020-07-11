@@ -42,9 +42,6 @@ public class PlayerHandler : MonoBehaviour
         // else Debug.Log("no item in hand");
     }
 
-    void OnTriggerEnter2D(Collider2D col) {
-        Debug.Log("test");
-    }
 
     void FixedUpdate() {
         transform.Translate(inputHandler * Time.deltaTime);

@@ -43,6 +43,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 4257587099
+    locked: 0
+  - name: Asteroid
+    uniqueID: 2000596797
+    locked: 0
   - name: Ship
     uniqueID: 2274970747
     locked: 0

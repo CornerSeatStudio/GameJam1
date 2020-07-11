@@ -28,7 +28,8 @@ public class ShipHandler : MonoBehaviour
 
     public void MoveShip(ThrusterTerminal thruster){
         Debug.Log("moving ship: " + thruster.burstDirection);
-       rb.AddForce(thruster.burstDirection * 2000f);
+        //if the ship is too fast, dont add force, but still do particle effect
+      // rb.AddForce(thruster.burstDirection * 100f, Forcemode2d.Impulse);
     }
 
     

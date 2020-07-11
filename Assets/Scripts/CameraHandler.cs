@@ -10,7 +10,7 @@ public class CameraHandler : MonoBehaviour
     public Transform target;
 
     void Start(){
-        Camera.main.orthographicSize = 1600f;
+        Camera.main.orthographicSize = 10f;
     }
 
     void LateUpdate() {
