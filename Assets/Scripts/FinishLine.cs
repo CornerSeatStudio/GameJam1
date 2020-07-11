@@ -5,7 +5,9 @@ using UnityEngine;
 public class FinishLine : MonoBehaviour
 {
     public GameManager manager;
-    void OnTriggerEnter() { //upon reaching the finish zone, do a thing
-        manager.OnWin();
+    void OnTriggerEnter2D(Collider2D col) { //upon reaching the finish zone, do a thing
+        if(col.gameObject.tag == "Ship") {
+            manager.OnWin();
+        }
     }
 }

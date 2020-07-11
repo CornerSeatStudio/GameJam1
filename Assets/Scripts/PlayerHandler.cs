@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerHandler : MonoBehaviour
 {
 
-    public float moveSpeed = 800f;
+    public float moveSpeed = 8f;
 
     private Vector2 inputHandler;
     private Collider2D col;
@@ -29,9 +29,10 @@ public class PlayerHandler : MonoBehaviour
 
        
         if(Input.GetButtonDown("Fire1")) {
-            InteractWithTerminal();
+            InteractWithThrusterTerminal();
             InteractWithItem();
-            Debug.Log("fire1d");
+            InteractWithViewTerminal();
+            //Debug.Log("fire1d");
         }
 
         if(Input.GetButtonDown("Fire2")) { //for dropping shit
@@ -50,10 +51,11 @@ public class PlayerHandler : MonoBehaviour
 
     //upon approaching an item
     private void InteractWithItem() {
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, 3, Vector2.zero);
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, 1, Vector2.zero);
         foreach(RaycastHit2D hit in hits) { //for the hits
             if(hit.transform.GetComponent<Item>()) { //if ive interacted with an item
                 DealWithItem(hit.transform.GetComponent<Item>());
+                break;
             }
         }
     }
@@ -74,11 +76,12 @@ public class PlayerHandler : MonoBehaviour
 
 
     //checks if cunts up to terminal
-    private void InteractWithTerminal() {
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, 3, Vector2.zero);
+    private void InteractWithThrusterTerminal() {
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, 1, Vector2.zero);
         foreach(RaycastHit2D hit in hits) { //for the hits
             if(hit.transform.GetComponent<ThrusterTerminal>()) { //if ive interacted with a thruster terminal WITH an item
                 DealWithInteraction(hit.transform.GetComponent<ThrusterTerminal>());
+                break; 
             }
         }
     }
@@ -88,6 +91,15 @@ public class PlayerHandler : MonoBehaviour
             terminal.Interact();
         } else {
             terminal.Interact(CurrItem);
+        }
+    }
+
+     private void InteractWithViewTerminal() {
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, 1, Vector2.zero);
+        foreach(RaycastHit2D hit in hits) { //for the hits
+            if(hit.transform.GetComponent<ViewTerminal>()) { //if ive interacted with a thruster terminal WITH an item
+                hit.transform.GetComponent<ViewTerminal>().Interact();
+            }
         }
     }
 

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6589955180584863015}
   m_Layer: 0
   m_Name: asteroid (2)
-  m_TagString: Untagged
+  m_TagString: Asteroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133,5 +133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aac749b27496401469526224ad6d2297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 10
   spinSpeedRange: {x: 1, y: 5}
   thrustRange: {x: 1, y: 5}

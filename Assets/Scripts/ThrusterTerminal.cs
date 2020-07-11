@@ -32,7 +32,7 @@ public class ThrusterTerminal : Interactable //goes on each terminal
         }
     }
 
-    public override void Interact(Item item) {
+    public void Interact(Item item) {
         if (currItem == null) {
             AddToInteractable(item);
         } else {
@@ -40,13 +40,13 @@ public class ThrusterTerminal : Interactable //goes on each terminal
         }
     }
 
-    protected override void AddToInteractable(Item item) {
+    protected void AddToInteractable(Item item) {
         currItem = item;
         Debug.Log("item " + currItem.name + " added to console");
         player.CurrItem = null;
     }
 
-    protected override void SwapWithInteractable(Item item){
+    protected void SwapWithInteractable(Item item){
         Debug.Log("Swapping item " + currItem.name + " with " + item.name);
         Item temp = currItem;
         currItem = item;
@@ -54,7 +54,7 @@ public class ThrusterTerminal : Interactable //goes on each terminal
 
     }
 
-    protected override void RetrieveFromInteractable(){
+    protected void RetrieveFromInteractable(){
         Debug.Log("curr item " + currItem.name + " retrieved");
         player.CurrItem = currItem;
         currItem = null;

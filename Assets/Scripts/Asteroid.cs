@@ -5,6 +5,9 @@ using UnityEngine;
 public class Asteroid : MonoBehaviour
 {
 
+    public float damage;
+    public float damageRandomOffset;
+
     public Vector2 spinSpeedRange;
     public Vector2 thrustRange;
 
@@ -19,6 +22,10 @@ public class Asteroid : MonoBehaviour
         rb = this.GetComponent<Rigidbody2D>();
         Vector2 temp = Random.insideUnitCircle.normalized;
         rb.AddForce(temp * thrust, ForceMode2D.Impulse);
+    }
+
+    public float GetAsteroidDamage() {
+        return Random.Range(damage - damageRandomOffset, damage + damageRandomOffset);
     }
 
     // Update is called once per frame

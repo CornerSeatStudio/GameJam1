@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     
     public void OnWin() {   
+        Debug.Log("reached finish line");
         //display UI
         //show score
         //restart or main menu

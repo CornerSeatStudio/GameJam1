@@ -61,3 +61,6 @@ TagManager:
   - name: Player
     uniqueID: 675968845
     locked: 0
+  - name: ship exterior
+    uniqueID: 261135283
+    locked: 0

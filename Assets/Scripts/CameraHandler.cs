@@ -5,20 +5,36 @@ using UnityEngine;
 public class CameraHandler : MonoBehaviour
 {
 
+    public float camSize = 10f;
     public float cameraZOffset = -500;
     public float smoothSpeed = .9f;
     public Transform target;
 
-    void Start(){
-        Camera.main.orthographicSize = 10f;
+    public float CurrCamSize {get; set; }
+    public Vector3 CurrCamOffset {get; set; }
+    public float CurrSmoothSpeed {get; set; }
+
+    void Awake(){ //HAS TO HAPPEN BEFORE VIEW TERMINAL SCRIPT
+        Camera.main.orthographicSize = camSize;
+
+        //init vars
+        CurrCamSize = camSize;
+        CurrCamOffset = new Vector3(0, 0, cameraZOffset);
+        CurrSmoothSpeed = smoothSpeed;
     }
 
     void LateUpdate() {
-        Vector3 dPos = new Vector3(target.transform.position.x, target.transform.position.y, cameraZOffset);
-        Vector3 sPos = Vector3.Lerp(transform.position, dPos, smoothSpeed);
+        //Debug.Log("currSize " + CurrCamSize);
+        //Debug.Log("curr offset " + CurrCamOffset);
+
+        Camera.main.orthographicSize = CurrCamSize;
+
+        Vector3 dPos = target.transform.position + CurrCamOffset;
+        Vector3 sPos = Vector3.Lerp(transform.position, dPos, CurrSmoothSpeed);
         transform.position = sPos;
 
-        transform.LookAt(target);
+        //Debug.Log(CurrSmoothSpeed);
+        //transform.LookAt(target);
 
     }
 }
