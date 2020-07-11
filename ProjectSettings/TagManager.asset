@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Terminal
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -40,4 +42,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ship
+    uniqueID: 2274970747
+    locked: 0
+  - name: Terminal
+    uniqueID: 2111515221
+    locked: 0
+  - name: Item
+    uniqueID: 1555518381
+    locked: 0
+  - name: Player
+    uniqueID: 675968845
     locked: 0
