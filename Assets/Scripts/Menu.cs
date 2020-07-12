@@ -21,4 +21,7 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene(scene);
         Debug.Log("Restart");
     }
+    public void QuitToMenu(){
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
+    }
 }
