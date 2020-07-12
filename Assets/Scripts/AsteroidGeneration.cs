@@ -37,7 +37,7 @@ public class AsteroidGeneration : MonoBehaviour
 
             GameObject go = Instantiate(asteroidPrefabs[Random.Range(0, asteroidPrefabs.Count)], pos, Quaternion.identity);
             //calculate random size
-            float temp = Random.Range(-randomSizeOffset, randomSizeOffset);
+            float temp = Random.Range(0, randomSizeOffset);
             float newx = go.transform.localScale.y + temp;
             float newy = go.transform.localScale.y + temp;
 

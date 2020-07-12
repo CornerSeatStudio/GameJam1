@@ -143,6 +143,7 @@ public class ThrusterTerminal : Interactable //goes on each terminal
             if(localBurstCoroutine != null) { //for interupts
                 if(currItem is ThrustHalter) { //for the interuppts
                     StopCoroutine(localBurstCoroutine);
+                    localBurstCoroutine = null;
                 }
             } else { //for cycling
                 if (currItem is ThrustHastener) {

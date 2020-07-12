@@ -5508,21 +5508,16 @@ PolygonCollider2D:
     - - {x: -5.5, y: -0.2}
       - {x: -5.403114, y: -0.31134364}
       - {x: -5.4500003, y: -0.2}
-    - - {x: -0.850769, y: 7.558897}
-      - {x: -0.9171793, y: 7.5003076}
-      - {x: -0.9079714, y: 6.479144}
-      - {x: -0.8633459, y: 6.4124227}
-      - {x: 0.9213205, y: 6.4165635}
-      - {x: 0.9575863, y: 6.4788394}
-      - {x: 0.9584724, y: 7.4972115}
-      - {x: 0.89647424, y: 7.5671787}
-    - - {x: -0.825, y: 7.475}
-      - {x: 0.825, y: 7.475}
-      - {x: 0.825, y: 6.5750003}
-      - {x: -0.825, y: 6.5750003}
-    - - {x: 0.6, y: 6.7000003}
-      - {x: 0.65828204, y: 6.641718}
-      - {x: 0.7, y: 6.65}
+    - - {x: -0.9079714, y: 6.6791263}
+      - {x: -0.88000786, y: 6.5624084}
+      - {x: 0.8546741, y: 6.616545}
+      - {x: 0.89093983, y: 6.778812}
+    - - {x: -0.8378215, y: 7.1238623}
+      - {x: 0.8416607, y: 7.15836}
+      - {x: -0.79167676, y: 6.791646}
+    - - {x: 0.8166009, y: 7.083299}
+      - {x: -0.6746486, y: 6.808369}
+      - {x: 0.68333817, y: 6.84998}
     - - {x: 2.6989007, y: 8.533166}
       - {x: 3.3820372, y: 7.9274945}
       - {x: 2.6093028, y: 7.9323177}
@@ -21877,8 +21872,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2144285377}
-  targetBurstTime: 6
-  targetBurstRandomnessRange: 3
+  targetBurstTime: 4
+  targetBurstRandomnessRange: 2
   burstDirection: {x: 0, y: 1}
   burstEvent:
     m_PersistentCalls:
@@ -28526,6 +28521,7 @@ GameObject:
   - component: {fileID: 1772016412}
   - component: {fileID: 1772016413}
   - component: {fileID: 1772016414}
+  - component: {fileID: 1772016415}
   m_Layer: 0
   m_Name: Ship interior
   m_TagString: Ship
@@ -28676,6 +28672,102 @@ CircleCollider2D:
   m_Offset: {x: 0.6110057, y: 0.00000007283755}
   serializedVersion: 2
   m_Radius: 10.887623
+--- !u!82 &1772016415
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772016409}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 3a05c1b1f304eea43822a2ee1ba8457b, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.689
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1795201968
 GameObject:
   m_ObjectHideFlags: 0
@@ -29026,9 +29118,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.02495353, y: -0.69740194}
+  m_Offset: {x: 0.02495353, y: -0.5725263}
   serializedVersion: 2
-  m_Radius: 1.2681494
+  m_Radius: 1.1432737
 --- !u!212 &1835728140
 SpriteRenderer:
   m_ObjectHideFlags: 0
