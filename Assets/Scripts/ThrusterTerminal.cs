@@ -1,19 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Events;
 
 [System.Serializable] public class BurstEvent : UnityEvent<ThrusterTerminal> {}
 public class ThrusterTerminal : Interactable //goes on each terminal
 {
     public PlayerHandler player;
-
     public float targetBurstTime;
     public float targetBurstRandomnessRange; //+- the BurstTime (MUST BE < THAN TARGETBURSTTIME)
-
     public Vector2 burstDirection;
     public BurstEvent burstEvent;
-
+    public GameObject ThrustLeft;
 
     public GameObject interactKey;
 
@@ -22,8 +21,10 @@ public class ThrusterTerminal : Interactable //goes on each terminal
 
     protected void Start(){
         interactKey.SetActive(false);
+        
         //start thruster coroutine
         mainBurstCoroutine = BurstDriver();
+        ThrustLeft.SetActive(false);
         StartCoroutine(mainBurstCoroutine);
     }
 
@@ -99,7 +100,9 @@ public class ThrusterTerminal : Interactable //goes on each terminal
     private IEnumerator BurstCycle(float currBurstTime) {
         yield return BurstCycleTimer(currBurstTime);
         Burst();
+        
         localBurstCoroutine = null;
+        
     }
 
     //every x seconds (aka a cycle), at least one thruster is guaranteed to burst
@@ -111,7 +114,12 @@ public class ThrusterTerminal : Interactable //goes on each terminal
 
     private void Burst() {
         burstEvent.Invoke(this);
+        ThrustLeft.SetActive(true);
+        StartCoroutine(StopSoundAfterTime(3));
     }
-
+    private IEnumerator StopSoundAfterTime(float audiotime){
+        yield return new WaitForSeconds(audiotime);
+        ThrustLeft.SetActive(false);
+    }
 
 }
