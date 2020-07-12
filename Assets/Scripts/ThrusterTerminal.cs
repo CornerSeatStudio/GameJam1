@@ -14,14 +14,27 @@ public class ThrusterTerminal : Interactable //goes on each terminal
     public Vector2 burstDirection;
     public BurstEvent burstEvent;
 
+
+    public GameObject interactKey;
+
     private Item currItem;
     private IEnumerator mainBurstCoroutine;
 
-    void Start(){
+    protected void Start(){
+        interactKey.SetActive(false);
         //start thruster coroutine
         mainBurstCoroutine = BurstDriver();
         StartCoroutine(mainBurstCoroutine);
     }
+
+    protected override void OnTriggerEnter2D(Collider2D col) {
+        if(col.gameObject.tag == "Player") interactKey.SetActive(true);
+    }
+
+    protected override void OnTriggerExit2D(Collider2D col) {
+        if(col.gameObject.tag == "Player") interactKey.SetActive(false);
+    }
+    
 
     //if i access terminal with no item
     public override void Interact() {

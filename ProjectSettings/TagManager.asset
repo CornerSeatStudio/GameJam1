@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Terminal
   - Item
+  - Ship
+  - Asteroid
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -60,6 +63,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 675968845
+    locked: 0
+  - name: ui
+    uniqueID: 4137854149
     locked: 0
   - name: ship exterior
     uniqueID: 261135283

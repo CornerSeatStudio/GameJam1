@@ -7,10 +7,8 @@ public abstract class Interactable : MonoBehaviour
     //for both options
     public abstract void Interact();
 
-    private void OnTriggerEnter2D(Collider2D col) {
-    }
+    protected abstract void OnTriggerEnter2D(Collider2D col);
 
-    protected virtual void OnTriggerExit2D(Collider2D col) {
-    }
+    protected abstract void OnTriggerExit2D(Collider2D col);
     
 }

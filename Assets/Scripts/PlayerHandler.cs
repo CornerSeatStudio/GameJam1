@@ -10,7 +10,9 @@ public class PlayerHandler : MonoBehaviour
     private Vector2 inputHandler;
     private Collider2D col;
     public Item CurrItem {get; set;} = null;
-    
+    private bool atWall;
+        
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,13 +22,20 @@ public class PlayerHandler : MonoBehaviour
     }  
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
 
         inputHandler = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         inputHandler.Normalize();
+
+        //face move direction
+        if (inputHandler != Vector2.zero) {
+            float angle = Mathf.Atan2(inputHandler.y, inputHandler.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }
+
         inputHandler *= moveSpeed;
 
+     //   Debug.Log("forward transform" + transform.up);
        
         if(Input.GetButtonDown("Fire1")) {
             InteractWithThrusterTerminal();
@@ -41,12 +50,67 @@ public class PlayerHandler : MonoBehaviour
 
         // if(CurrItem != null) Debug.Log("currItem: " + CurrItem.name);
         // else Debug.Log("no item in hand");
+
+        if(atWall) {
+            DealWithWall();
+        } else {
+            transform.Translate(inputHandler * Time.deltaTime, Space.World);
+        }
+
+      //  Debug.Log("last: " + lastdirection + " vs input: " + inputHandler.normalized);
+
     }
 
+    void DealWithWall() {
+        //or if only a single key is pressed
 
-    void FixedUpdate() {
-        transform.Translate(inputHandler * Time.deltaTime);
+        //check if both keys pressed at same time
+        if(lastX != 0 && lastY != 0) {
+            Debug.Log("both key axis pressed");
+            if(!(inputHandler.x == lastX && inputHandler.y == 0
+                || inputHandler.x == 0 && inputHandler.y == lastY
+                || inputHandler.x == lastX && inputHandler.y == lastY)) {
+                    transform.Translate(inputHandler * Time.deltaTime, Space.World);
+                }
+            
+        } else if (lastX != 0 && lastY == 0) { //if only one of a d
+            Debug.Log("a or d pressed");
+            if(!(inputHandler.x == lastX)) { //only move if a or d isnt pressed
+                transform.Translate(inputHandler * Time.deltaTime, Space.World);
+            }
+            
+        }else if (lastX == 0 && lastY != 0) { // if only one of w 
+            Debug.Log("w or s pressed");
+            if(!(inputHandler.y == lastY)) { //only move if a or d isnt pressed
+                transform.Translate(inputHandler * Time.deltaTime, Space.World);
+            }
+
+        } 
+            
+
     }
+
+    float lastX;
+    float lastY;
+
+    void OnTriggerEnter2D(Collider2D collider) {
+        if(collider.tag == "Wall") {
+            lastX = inputHandler.x;
+            lastY = inputHandler.y;
+            Debug.Log("entered wall");
+            atWall = true;
+            
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collider) {
+        if(collider.tag == "Wall") {
+            Debug.Log("exited wall");
+            atWall = false;
+            
+        }
+    }
+
 
 
     //upon approaching an item
@@ -95,7 +159,7 @@ public class PlayerHandler : MonoBehaviour
     }
 
      private void InteractWithViewTerminal() {
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, 1, Vector2.zero);
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, 2, Vector2.zero);
         foreach(RaycastHit2D hit in hits) { //for the hits
             if(hit.transform.GetComponent<ViewTerminal>()) { //if ive interacted with a thruster terminal WITH an item
                 hit.transform.GetComponent<ViewTerminal>().Interact();

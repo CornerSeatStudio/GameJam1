@@ -17,7 +17,7 @@ public class ShipHandler : MonoBehaviour
     }
 
     void Update() {
-        Debug.Log(currHealth);
+        //Debug.Log(currHealth);
     }
 
     void OnCollisionEnter2D(Collision2D col) {
@@ -29,7 +29,7 @@ public class ShipHandler : MonoBehaviour
     public void MoveShip(ThrusterTerminal thruster){
         //Debug.Log("moving ship: " + thruster.burstDirection);
         //if the ship is too fast, dont add force, but still do particle effect
-      // rb.AddForce(thruster.burstDirection * 100f, Forcemode2d.Impulse);
+      //rb.AddForce(thruster.burstDirection * 10f, ForceMode2D.Impulse);
     }
 
     

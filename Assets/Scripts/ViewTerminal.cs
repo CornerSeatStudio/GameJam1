@@ -12,6 +12,9 @@ public class ViewTerminal : Interactable
     public Vector3 zoomOutDisplacement;
     [Range(0, 1)] public float zoomOutSmoothness; 
     
+    public GameObject interactKey;
+
+
     private bool isOpened;
 
     private float originCameraSize;
@@ -19,7 +22,9 @@ public class ViewTerminal : Interactable
     private float originSmoothSpeed;
 
 
-    void Start() {
+    protected void Start() {
+        interactKey.SetActive(false);
+        //Debug.Log("yewot");
         exteriorShipSprite.SetActive(false);
         cameraHandler = Camera.main.GetComponent<CameraHandler>();
         isOpened = false;
@@ -27,6 +32,20 @@ public class ViewTerminal : Interactable
         originCamOffset = cameraHandler.CurrCamOffset;
         originSmoothSpeed = cameraHandler.CurrSmoothSpeed;
 
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D col) {
+        if(col.gameObject.tag == "Player") interactKey.SetActive(true);
+    }
+
+    protected override void OnTriggerExit2D(Collider2D col) {
+        if(col.gameObject.tag == "Player") {
+            interactKey.SetActive(false);
+            if (isOpened) OnClose();
+        } 
+
+       // Debug.Log("left view terminal");
+        //if the terminal is left, reset camera
     }
 
     public override void Interact() {
@@ -42,13 +61,6 @@ public class ViewTerminal : Interactable
 
         
 
-    }
-
-    protected override void OnTriggerExit2D(Collider2D col) {
-        
-       // Debug.Log("left view terminal");
-        //if the terminal is left, reset camera
-        if (isOpened) OnClose();
     }
 
 

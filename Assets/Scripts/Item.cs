@@ -5,10 +5,23 @@ using UnityEngine;
 //deals with the item existing in the WORLD, not on player
 public abstract class Item : MonoBehaviour
 {
+
+    public GameObject keySprite;
+
+    protected virtual void Start() {
+        keySprite.SetActive(false);
+    }
+
     private void OnTriggerEnter2D(Collider2D col) {
+        if(col.tag == "Player") {
+            keySprite.SetActive(true);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D col) {
+        if(col.tag == "Player") {
+            keySprite.SetActive(false);
+        }
     }
 
     public virtual void OnPickup() {

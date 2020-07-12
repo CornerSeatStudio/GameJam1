@@ -23,7 +23,7 @@ public class CameraHandler : MonoBehaviour
         CurrSmoothSpeed = smoothSpeed;
     }
 
-    void LateUpdate() {
+    void FixedUpdate() {
         //Debug.Log("currSize " + CurrCamSize);
         //Debug.Log("curr offset " + CurrCamOffset);
 

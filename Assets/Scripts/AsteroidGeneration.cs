@@ -34,7 +34,7 @@ public class AsteroidGeneration : MonoBehaviour
             float newx = go.transform.localScale.y + temp;
             float newy = go.transform.localScale.y + temp;
 
-            go.transform.localScale = new Vector2(newx, newy);
+            go.transform.localScale = new Vector3(newx, newy);
         }
     }
 }
