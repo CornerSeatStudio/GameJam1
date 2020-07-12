@@ -5092,7 +5092,7 @@ GameObject:
   - component: {fileID: 317864409}
   - component: {fileID: 317864410}
   - component: {fileID: 317864411}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: interior hitbox
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -33526,6 +33526,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 256
   IsIdle: 0
   IsWalkingDown: 0
   IsWalkingLeft: 0
@@ -33577,6 +33580,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ship-exterior-broken-4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2940271577046248795, guid: 4a387a757b400cf45bcdd0f0b20fc62a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2940271577046248795, guid: 4a387a757b400cf45bcdd0f0b20fc62a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2940271577046248796, guid: 4a387a757b400cf45bcdd0f0b20fc62a,
         type: 3}
@@ -33758,6 +33771,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Thrust Halter Item
       objectReference: {fileID: 0}
+    - target: {fileID: 6370388497291627689, guid: 2449619e47f015440b6e73d2c3e75aa9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8598784712395291114, guid: 2449619e47f015440b6e73d2c3e75aa9,
         type: 3}
       propertyPath: keySprite
@@ -33889,6 +33907,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: thrust hastener
       objectReference: {fileID: 0}
+    - target: {fileID: 6737332738222840421, guid: 0d811e8e1303a944da8bc90fda46da25,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d811e8e1303a944da8bc90fda46da25, type: 3}
 --- !u!1001 &7208728464658789240
@@ -33902,6 +33925,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ship-exterior-broken-3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208728463502587667, guid: 5b57dfe655c9f3e46acd42fd2ba6bde1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208728463502587667, guid: 5b57dfe655c9f3e46acd42fd2ba6bde1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7208728463502587668, guid: 5b57dfe655c9f3e46acd42fd2ba6bde1,
         type: 3}
@@ -33986,6 +34019,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ship-exterior-broken-1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7217460239024746870, guid: d1784c83cf6d01f44926294fb9f27d99,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7217460239024746870, guid: d1784c83cf6d01f44926294fb9f27d99,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7217460239024746871, guid: d1784c83cf6d01f44926294fb9f27d99,
         type: 3}
@@ -34140,6 +34183,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ship-exterior-broken-2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8979626316779813721, guid: 7711b7aec6fcab84a87f8a0f68ef88be,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8979626316779813721, guid: 7711b7aec6fcab84a87f8a0f68ef88be,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7711b7aec6fcab84a87f8a0f68ef88be, type: 3}

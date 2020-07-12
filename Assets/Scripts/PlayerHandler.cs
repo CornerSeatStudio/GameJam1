@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum MoveDirs {UP, DOWN, LEFT, RIGHT, UPLEFT, UPRIGHT, DOWNLEFT, DOWNRIGHT}
+
 public class PlayerHandler : MonoBehaviour
 {
     private Animator animator;
     public float moveSpeed = 5f;
+    public LayerMask layerMask;
+
 
     public bool IsIdle;
     public bool IsWalkingDown;
@@ -16,7 +20,7 @@ public class PlayerHandler : MonoBehaviour
     private Collider2D col;
     public Item CurrItem {get; set;} = null;
     private bool atWall;
-        
+    private Dictionary<MoveDirs, Vector2> moveToDirVec;
 
     // Start is called before the first frame update
     void Start()
@@ -25,8 +29,20 @@ public class PlayerHandler : MonoBehaviour
       //  rb = this.GetComponent<Rigidbody2D>();
         col = this.GetComponent<Collider2D>();
         col.isTrigger = true; //prevents collisions from fucking shit
+        moveToDirVec = new Dictionary<MoveDirs, Vector2>();
+        setupdirvec();
     }  
 
+    private void setupdirvec(){
+        moveToDirVec[MoveDirs.UPLEFT] =    new Vector2(-1, 1);
+        moveToDirVec[MoveDirs.UP] =        new Vector2(0, 1);
+        moveToDirVec[MoveDirs.UPRIGHT] =   new Vector2(1, 1);
+        moveToDirVec[MoveDirs.LEFT] =      new Vector2(-1, 0);
+        moveToDirVec[MoveDirs.RIGHT] =     new Vector2(1, 0);
+        moveToDirVec[MoveDirs.DOWNLEFT] =  new Vector2(-1, -1);
+        moveToDirVec[MoveDirs.DOWN] =      new Vector2(0, -1);
+        moveToDirVec[MoveDirs.DOWNRIGHT] = new Vector2(1, -1);
+    }
     // Update is called once per frame
     void Update() {
 
@@ -76,12 +92,23 @@ public class PlayerHandler : MonoBehaviour
         // if(CurrItem != null) Debug.Log("currItem: " + CurrItem.name);
         // else Debug.Log("no item in hand");
 
-        if(atWall) {
-            DealWithWall();
-            //transform.Translate(-inputHandler * Time.deltaTime, Space.World);
-        } else {
-            transform.Translate(inputHandler * Time.deltaTime, Space.World);
-        }
+        // if(atWall) {
+        //     DealWithWall();
+        //     //transform.Translate(-inputHandler * Time.deltaTime, Space.World);
+        // } else {
+        //     transform.Translate(inputHandler * Time.deltaTime, Space.World);
+        // }
+
+       MovementCheck();
+        //RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(1, 0), 5f, layerMask);
+               // RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, 1, Vector2.zero);
+
+       // RaycastHit2D hit2 = Physics2D.CircleCast(transform.position, 5, Vector3.zero);
+            //Debug.Log(hit.collider.tag);
+        
+
+        transform.Translate(inputHandler * Time.deltaTime, Space.World);
+
 
       //  Debug.Log("last: " + lastdirection + " vs input: " + inputHandler.normalized);
 
@@ -89,6 +116,41 @@ public class PlayerHandler : MonoBehaviour
 
     private bool CompareKeyPresses(float in1, float in2) {
         return in1 > 0 && in2 > 0 || in1 < 0 && in2 < 0;
+    }
+
+    //compare inputvector to raycastInfo
+    bool CanWalk() {
+        
+        //for each vector2 in list of NON ALLOWED WALKS
+        //if it isnt there, allow transform
+        return true;
+    }
+
+
+
+    void MovementCheck() {
+        //Debug.Log("testc");
+        //cast 8 rays for info
+        List<Vector2> unallowedDirs = new List<Vector2>();
+
+        if(Physics2D.Raycast(transform.position, moveToDirVec[MoveDirs.UPLEFT], 1f, layerMask)) unallowedDirs.Add(moveToDirVec[MoveDirs.UPLEFT]);        
+        if(Physics2D.Raycast(transform.position, moveToDirVec[MoveDirs.UP], 1f, layerMask)) unallowedDirs.Add(moveToDirVec[MoveDirs.UP]);        
+        if(Physics2D.Raycast(transform.position, moveToDirVec[MoveDirs.UPRIGHT], 1f, layerMask)) unallowedDirs.Add(moveToDirVec[MoveDirs.UPRIGHT]);        
+        if(Physics2D.Raycast(transform.position, moveToDirVec[MoveDirs.LEFT], 1f, layerMask)) unallowedDirs.Add(moveToDirVec[MoveDirs.LEFT]);        
+        if(Physics2D.Raycast(transform.position, moveToDirVec[MoveDirs.RIGHT], 1f, layerMask)) unallowedDirs.Add(moveToDirVec[MoveDirs.RIGHT]);        
+        if(Physics2D.Raycast(transform.position, moveToDirVec[MoveDirs.DOWNLEFT], 1f, layerMask)) unallowedDirs.Add(moveToDirVec[MoveDirs.DOWNLEFT]);        
+        if(Physics2D.Raycast(transform.position, moveToDirVec[MoveDirs.DOWN], 1f, layerMask)) unallowedDirs.Add(moveToDirVec[MoveDirs.DOWN]);        
+        if(Physics2D.Raycast(transform.position, moveToDirVec[MoveDirs.DOWNRIGHT], 1f, layerMask)) unallowedDirs.Add(moveToDirVec[MoveDirs.DOWNRIGHT]);     
+
+        foreach(Vector2 hit in unallowedDirs){
+            Debug.Log(hit);
+            // if(hit.collider.tag == "Wall") {
+            //     unallowedDirs.Add(hit.transform.eulerAngles);
+            //     Debug.Log(hit.point);
+            // }
+        }
+
+
     }
 
     void DealWithWall() {

@@ -51,7 +51,7 @@ public class ShipHandler : MonoBehaviour
         //if the ship is too fast, dont add force, but still do particle effect
 
         StartCoroutine(ParticleLoop(thruster));
-        rb.AddForce(thruster.burstDirection * thrusterForce, ForceMode2D.Impulse);
+       // rb.AddForce(thruster.burstDirection * thrusterForce, ForceMode2D.Impulse);
 
     }
 
