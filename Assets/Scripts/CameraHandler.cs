@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraHandler : MonoBehaviour
 {
 
-    public float camSize = 10f;
+    public float camSize = 15f;
     public float cameraZOffset = -500;
     public float smoothSpeed = .9f;
     public Transform target;
@@ -21,6 +21,7 @@ public class CameraHandler : MonoBehaviour
         CurrCamSize = camSize;
         CurrCamOffset = new Vector3(0, 0, cameraZOffset);
         CurrSmoothSpeed = smoothSpeed;
+
     }
 
     void FixedUpdate() {
