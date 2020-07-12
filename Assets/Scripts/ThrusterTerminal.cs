@@ -82,7 +82,6 @@ public class ThrusterTerminal : Interactable //goes on each terminal
             if(localBurstCoroutine != null) { //for interupts
                 if(currItem is ThrustHalter) { //for the interuppts
                     StopCoroutine(localBurstCoroutine);
-                    ThrustLeft.SetActive(false);
                 }
             } else { //for cycling
                 if (currItem is ThrustHastener) {
@@ -101,6 +100,7 @@ public class ThrusterTerminal : Interactable //goes on each terminal
     private IEnumerator BurstCycle(float currBurstTime) {
         yield return BurstCycleTimer(currBurstTime);
         Burst();
+        
         localBurstCoroutine = null;
         
     }
@@ -115,7 +115,11 @@ public class ThrusterTerminal : Interactable //goes on each terminal
     private void Burst() {
         burstEvent.Invoke(this);
         ThrustLeft.SetActive(true);
+        StartCoroutine(StopSoundAfterTime(3));
     }
-
+    private IEnumerator StopSoundAfterTime(float audiotime){
+        yield return new WaitForSeconds(audiotime);
+        ThrustLeft.SetActive(false);
+    }
 
 }
