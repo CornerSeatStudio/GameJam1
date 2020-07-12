@@ -39,9 +39,9 @@ public class ShipHandler : MonoBehaviour
 
     void Update()
 {
-    if(Input.GetButtonDown("Fire1")){
-        ShipDeath();
-    }
+    // if(Input.GetButtonDown("Fire1")){
+    //     ShipDeath();
+    // }
 }
 
     void OnCollisionEnter2D(Collision2D col) {
