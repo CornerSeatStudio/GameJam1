@@ -12,6 +12,7 @@ public class PlayerHandler : MonoBehaviour
     public Item CurrItem {get; set;} = null;
     private bool atWall;
         
+    private bool isDead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -21,45 +22,52 @@ public class PlayerHandler : MonoBehaviour
         col.isTrigger = true; //prevents collisions from fucking shit
     }  
 
+    public void setDeathInvoke() {
+        isDead = true;
+    }
+
     // Update is called once per frame
     void Update() {
 
-        inputHandler = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        inputHandler.Normalize();
+        if(!isDead) {
 
-        //face move direction
-        if (inputHandler != Vector2.zero) {
-            float angle = Mathf.Atan2(inputHandler.y, inputHandler.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            inputHandler = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            inputHandler.Normalize();
+
+            //face move direction
+            if (inputHandler != Vector2.zero) {
+                float angle = Mathf.Atan2(inputHandler.y, inputHandler.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            }
+
+            inputHandler *= moveSpeed;
+
+        //   Debug.Log("forward transform" + transform.up);
+        
+            if(Input.GetButtonDown("Fire1")) {
+                InteractWithThrusterTerminal();
+                InteractWithItem();
+                InteractWithViewTerminal();
+                //Debug.Log("fire1d");
+            }
+
+            if(Input.GetButtonDown("Fire2")) { //for dropping shit
+                if(CurrItem != null) DropCurrItem();
+            }
+
+            // if(CurrItem != null) Debug.Log("currItem: " + CurrItem.name);
+            // else Debug.Log("no item in hand");
+
+            if(atWall) {
+                DealWithWall();
+                //transform.Translate(-inputHandler * Time.deltaTime, Space.World);
+            } else {
+                transform.Translate(inputHandler * Time.deltaTime, Space.World);
+            }
+
+        //  Debug.Log("last: " + lastdirection + " vs input: " + inputHandler.normalized);
+
         }
-
-        inputHandler *= moveSpeed;
-
-     //   Debug.Log("forward transform" + transform.up);
-       
-        if(Input.GetButtonDown("Fire1")) {
-            InteractWithThrusterTerminal();
-            InteractWithItem();
-            InteractWithViewTerminal();
-            //Debug.Log("fire1d");
-        }
-
-        if(Input.GetButtonDown("Fire2")) { //for dropping shit
-            if(CurrItem != null) DropCurrItem();
-        }
-
-        // if(CurrItem != null) Debug.Log("currItem: " + CurrItem.name);
-        // else Debug.Log("no item in hand");
-
-        if(atWall) {
-            DealWithWall();
-            //transform.Translate(-inputHandler * Time.deltaTime, Space.World);
-        } else {
-            transform.Translate(inputHandler * Time.deltaTime, Space.World);
-        }
-
-      //  Debug.Log("last: " + lastdirection + " vs input: " + inputHandler.normalized);
-
     }
 
     private bool CompareKeyPresses(float in1, float in2) {

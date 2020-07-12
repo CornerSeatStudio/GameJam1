@@ -13,7 +13,7 @@ public class ThrusterTerminal : Interactable //goes on each terminal
     public Vector2 burstDirection;
     public BurstEvent burstEvent;
     public GameObject ThrustLeft;
-
+    public List<ParticleSystem> thrustParticles;
     public GameObject interactKey;
 
     private Item currItem;
