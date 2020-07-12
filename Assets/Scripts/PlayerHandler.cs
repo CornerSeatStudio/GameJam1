@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class PlayerHandler : MonoBehaviour
 {
+    private Animator animator;
+    public float moveSpeed = 5f;
 
-    public float moveSpeed = 8f;
-
+    public bool IsIdle;
+    public bool IsWalkingDown;
+    public bool IsWalkingLeft;
+    public bool IsWalkingUp;
+    public bool IsWalkingRight;
     private Vector2 inputHandler;
     private Collider2D col;
     public Item CurrItem {get; set;} = null;
@@ -16,6 +21,7 @@ public class PlayerHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animator = this.GetComponent<Animator>();
       //  rb = this.GetComponent<Rigidbody2D>();
         col = this.GetComponent<Collider2D>();
         col.isTrigger = true; //prevents collisions from fucking shit
@@ -27,12 +33,31 @@ public class PlayerHandler : MonoBehaviour
         inputHandler = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         inputHandler.Normalize();
 
-        //face move direction
-        if (inputHandler != Vector2.zero) {
-            float angle = Mathf.Atan2(inputHandler.y, inputHandler.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        if(inputHandler == Vector2.zero){
+            IsIdle=true;
+        }else{
+            IsIdle=false;
         }
-
+        if(Input.GetKeyDown(KeyCode.S)){
+            IsWalkingDown=true;
+        }else if(Input.GetKeyUp(KeyCode.S)){
+            IsWalkingDown=false;
+        }
+        if(Input.GetKeyDown(KeyCode.A)){
+            IsWalkingLeft=true;
+        }else if(Input.GetKeyUp(KeyCode.A)){
+            IsWalkingLeft=false;
+        }
+        if(Input.GetKeyDown(KeyCode.W)){
+            IsWalkingUp=true;
+        }else if(Input.GetKeyUp(KeyCode.W)){
+            IsWalkingUp=false;
+        }
+        if(Input.GetKeyDown(KeyCode.D)){
+            IsWalkingRight=true;
+        }else if(Input.GetKeyUp(KeyCode.D)){
+            IsWalkingRight=false;
+        }
         inputHandler *= moveSpeed;
 
      //   Debug.Log("forward transform" + transform.up);
@@ -180,6 +205,15 @@ public class PlayerHandler : MonoBehaviour
     }
 
   
+    void LateUpdate(){
 
+        //anim stuff
+        animator.SetBool("IsIdle", IsIdle);
+        animator.SetBool("IsWalkingDown", IsWalkingDown);
+        animator.SetBool("IsWalkingLeft", IsWalkingLeft);
+        animator.SetBool("IsWalkingRight", IsWalkingRight);
+        animator.SetBool("IsWalkingUp", IsWalkingUp);
+
+    }
     
 }
