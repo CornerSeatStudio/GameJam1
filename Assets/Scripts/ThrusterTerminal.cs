@@ -19,10 +19,15 @@ public class ThrusterTerminal : Interactable //goes on each terminal
     private Item currItem;
     private IEnumerator mainBurstCoroutine;
 
-    public GameObject terminals;
+    public GameObject terminalsAdd;
+
+    public GameObject terminalsRetrieve;
+    public GameObject terminalsSwap;
     protected void Start(){
         interactKey.SetActive(false);
-        terminals.SetActive(false);
+        terminalsAdd.SetActive(false);
+        terminalsSwap.SetActive(false);
+        terminalsRetrieve.SetActive(false);
         //start thruster coroutine
         mainBurstCoroutine = BurstDriver();
         ThrustLeft.SetActive(false);
@@ -44,22 +49,27 @@ public class ThrusterTerminal : Interactable //goes on each terminal
             Debug.Log("no item in terminal");
         } else {
             RetrieveFromInteractable();
+            terminalsRetrieve.SetActive(true);
+            StartCoroutine(StopSoundAfterTime2(0.5f));
         }
     }
 
     public void Interact(Item item) {
         if (currItem == null) {
             AddToInteractable(item);
+            terminalsAdd.SetActive(true);
+            StartCoroutine(StopSoundAfterTime2(0.5f));
         } else {
             SwapWithInteractable(item);
+            terminalsSwap.SetActive(true);
+            StartCoroutine(StopSoundAfterTime2(1f));
         }
     }
 
     protected void AddToInteractable(Item item) {
         currItem = item;
         Debug.Log("item " + currItem.name + " added to console");
-        terminals.SetActive(true);
-        StartCoroutine(StopSoundAfterTime2(2));
+
         player.CurrItem = null;
     }
 
@@ -126,7 +136,9 @@ public class ThrusterTerminal : Interactable //goes on each terminal
     }
     private IEnumerator StopSoundAfterTime2(float audiotime){
         yield return new WaitForSeconds(audiotime);
-        ThrustLeft.SetActive(false);
+        terminalsAdd.SetActive(false);
+        terminalsRetrieve.SetActive(false);
+        terminalsSwap.SetActive(false);
     }
 
 
