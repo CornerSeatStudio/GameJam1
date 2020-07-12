@@ -107,28 +107,35 @@ public class PlayerHandler : MonoBehaviour
             //Debug.Log(hit.collider.tag);
         
 
-        transform.Translate(inputHandler * Time.deltaTime, Space.World);
+        if(CanWalk()) transform.Translate(inputHandler * Time.deltaTime, Space.World);
 
 
       //  Debug.Log("last: " + lastdirection + " vs input: " + inputHandler.normalized);
 
     }
 
+    private bool CompareKeyStuffs(Vector2 input1, Vector2 input2){
+        return CompareKeyPresses(input1.x, input2.x) && CompareKeyPresses(input1.y, input2.y);
+    }
+
     private bool CompareKeyPresses(float in1, float in2) {
-        return in1 > 0 && in2 > 0 || in1 < 0 && in2 < 0;
+        return in1 > 0 && in2 > 0 || in1 < 0 && in2 < 0 || in1 == 0 && in2 == 0;
     }
 
     //compare inputvector to raycastInfo
     bool CanWalk() {
-        
-        //for each vector2 in list of NON ALLOWED WALKS
-        //if it isnt there, allow transform
+        List<Vector2> unallowedDirs = MovementCheck();
+        foreach(Vector2 mv in unallowedDirs){
+            if(CompareKeyStuffs(inputHandler, mv)){ //if the directions ARE the same
+                return false;
+            }
+        }
         return true;
     }
 
 
 
-    void MovementCheck() {
+    List<Vector2> MovementCheck() {
         //Debug.Log("testc");
         //cast 8 rays for info
         List<Vector2> unallowedDirs = new List<Vector2>();
@@ -142,15 +149,7 @@ public class PlayerHandler : MonoBehaviour
         if(Physics2D.Raycast(transform.position, moveToDirVec[MoveDirs.DOWN], 1f, layerMask)) unallowedDirs.Add(moveToDirVec[MoveDirs.DOWN]);        
         if(Physics2D.Raycast(transform.position, moveToDirVec[MoveDirs.DOWNRIGHT], 1f, layerMask)) unallowedDirs.Add(moveToDirVec[MoveDirs.DOWNRIGHT]);     
 
-        foreach(Vector2 hit in unallowedDirs){
-            Debug.Log(hit);
-            // if(hit.collider.tag == "Wall") {
-            //     unallowedDirs.Add(hit.transform.eulerAngles);
-            //     Debug.Log(hit.point);
-            // }
-        }
-
-
+        return unallowedDirs;
     }
 
     void DealWithWall() {
