@@ -15,7 +15,7 @@ public class ViewTerminal : Interactable
     public GameObject interactKey;
 
 
-    private bool isOpened;
+    public bool isOpened;
 
     private float originCameraSize;
     private Vector3 originCamOffset;

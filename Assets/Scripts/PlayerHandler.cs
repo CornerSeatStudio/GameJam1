@@ -10,6 +10,7 @@ public class PlayerHandler : MonoBehaviour
     public float moveSpeed = 5f;
     public LayerMask layerMask;
 
+    public ViewTerminal viewTerminal;
 
     public bool IsIdle;
     public bool IsWalkingDown;
@@ -45,6 +46,7 @@ public class PlayerHandler : MonoBehaviour
     }
     // Update is called once per frame
     void Update() {
+
 
         inputHandler = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         inputHandler.Normalize();
@@ -107,7 +109,8 @@ public class PlayerHandler : MonoBehaviour
             //Debug.Log(hit.collider.tag);
         
 
-        if(CanWalk()) transform.Translate(inputHandler * Time.deltaTime, Space.World);
+
+        if(CanWalk() && !viewTerminal.isOpened) transform.Translate(inputHandler * Time.deltaTime, Space.World);
 
 
       //  Debug.Log("last: " + lastdirection + " vs input: " + inputHandler.normalized);
