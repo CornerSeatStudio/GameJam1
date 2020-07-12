@@ -111,6 +111,7 @@ public class ThrusterTerminal : Interactable //goes on each terminal
 
     private void Burst() {
         burstEvent.Invoke(this);
+        
     }
 
 
