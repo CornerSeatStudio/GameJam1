@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Parallax : MonoBehaviour{
 
-    private float size;
-    private float startPos;
+    private float sizeX;
+    private float sizeY;
+    private float startPosX;
+    private float startPosY;
 
     private Camera cam;
 
@@ -13,26 +15,41 @@ public class Parallax : MonoBehaviour{
 
     void Start() {
         cam = Camera.main;
-        startPos = transform.position.y;
-        size = GetComponent<SpriteRenderer>().bounds.size.y;
+        startPosY = transform.position.y;
+        startPosX = transform.position.x;
+        sizeY = GetComponent<SpriteRenderer>().bounds.size.y;
+        sizeX = GetComponent<SpriteRenderer>().bounds.size.x;
     }
 
     void Update() {
-        float temp = cam.transform.position.y * (1 - Plax);
-        float distance = cam.transform.position.y * Plax;
-        transform.position = new Vector3(transform.position.x, startPos + distance, transform.position.z);
+        float tempY = cam.transform.position.y * (1 - Plax);
+        float tempX = cam.transform.position.x * (1 - Plax);
+        float distanceY = cam.transform.position.y * Plax;
+        float distanceX = cam.transform.position.x * Plax;
+        transform.position = new Vector3(startPosX + distanceX, startPosY + distanceY, transform.position.z);
         
        // Debug.Log(temp + " vs " + (startPos + size));
 
-        if(temp > startPos + size) {
+        if(tempY > startPosY + sizeY) {
            // Debug.Log("expand");
-            startPos += size;
+            startPosY += sizeY;
         }
-        else if (temp < startPos - size) {
+        else if (tempY < startPosY - sizeY) {
               //  Debug.Log("expand");
 
-            startPos -= size;
+            startPosY -= sizeY;
         }
+
+        if(tempX > startPosX + sizeX) {
+           // Debug.Log("expand");
+            startPosX += sizeX;
+        }
+        else if (tempX < startPosX - sizeX) {
+              //  Debug.Log("expand");
+
+            startPosX -= sizeX;
+        }
+
     
     }
 

@@ -11,7 +11,8 @@ public class ShipHandler : MonoBehaviour
     public float maxSpeed;
     public float thrusterForce;
     public List<GameObject> brokenShipParts;
-    public UnityEvent onDeath;
+    public GameObject deathMenu;
+    public GameObject mainUI;
     private Rigidbody2D rb;
     private float currHealth;
 
@@ -20,6 +21,11 @@ public class ShipHandler : MonoBehaviour
         foreach(GameObject go in brokenShipParts){
             go.gameObject.SetActive(false);
         }
+
+        deathMenu.gameObject.SetActive(false);
+        mainUI.gameObject.SetActive(true);
+
+        healthbar.fillAmount = 1;
     }
 
     // Start is called before the first frame update
@@ -27,10 +33,16 @@ public class ShipHandler : MonoBehaviour
     {
         rb = this.GetComponent<Rigidbody2D>();
         currHealth = maxHealth;
-        healthbar.fillAmount = 1;
-
+        
 
     }
+
+    void Update()
+{
+    if(Input.GetButtonDown("Fire1")){
+        ShipDeath();
+    }
+}
 
     void OnCollisionEnter2D(Collision2D col) {
         if(col.gameObject.tag == "Asteroid"){
@@ -40,7 +52,6 @@ public class ShipHandler : MonoBehaviour
           //  Debug.Log(currHealth);
             if (currHealth <= 0) {
                 ShipDeath();
-                onDeath.Invoke(); //stop all thrusters, stop player movement, show death screen
             }
         
         }
@@ -67,16 +78,19 @@ public class ShipHandler : MonoBehaviour
     }
 
     private void ShipDeath(){
-        
+        Debug.Log("deidZD");
+        mainUI.SetActive(false);
+
+        deathMenu.transform.parent = null;
+        deathMenu.SetActive(true);
         //unparent the camera
         Camera.main.gameObject.transform.parent = null;
 
         //disable render for main ship game oject
         this.gameObject.SetActive(false);
 
-      //  
 
-        //play a sound
+ 
         //enable render for ship bits
         foreach(GameObject go in brokenShipParts) {
             //unparent
@@ -85,10 +99,10 @@ public class ShipHandler : MonoBehaviour
         
         }
 
-        brokenShipParts[0].GetComponent<Rigidbody2D>().AddForce(new Vector2(50, 0));
-        brokenShipParts[1].GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 50));
-        brokenShipParts[2].GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -50));
-        brokenShipParts[3].GetComponent<Rigidbody2D>().AddForce(new Vector2(-50, 0));
+        brokenShipParts[0].GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 10));
+        brokenShipParts[1].GetComponent<Rigidbody2D>().AddForce(new Vector2(10, 0));
+        brokenShipParts[2].GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -10));
+        brokenShipParts[3].GetComponent<Rigidbody2D>().AddForce(new Vector2(-10, 0));
        // Debug.Log("deadt");
     }
 

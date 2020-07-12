@@ -107,28 +107,35 @@ public class PlayerHandler : MonoBehaviour
             //Debug.Log(hit.collider.tag);
         
 
-        transform.Translate(inputHandler * Time.deltaTime, Space.World);
+        if(CanWalk()) transform.Translate(inputHandler * Time.deltaTime, Space.World);
 
 
       //  Debug.Log("last: " + lastdirection + " vs input: " + inputHandler.normalized);
 
     }
 
+    private bool CompareKeyStuffs(Vector2 input1, Vector2 input2){
+        return CompareKeyPresses(input1.x, input2.x) && CompareKeyPresses(input1.y, input2.y);
+    }
+
     private bool CompareKeyPresses(float in1, float in2) {
-        return in1 > 0 && in2 > 0 || in1 < 0 && in2 < 0;
+        return in1 > 0 && in2 > 0 || in1 < 0 && in2 < 0 || in1 == 0 && in2 == 0;
     }
 
     //compare inputvector to raycastInfo
     bool CanWalk() {
-        
-        //for each vector2 in list of NON ALLOWED WALKS
-        //if it isnt there, allow transform
+        List<Vector2> unallowedDirs = MovementCheck();
+        foreach(Vector2 mv in unallowedDirs){
+            if(CompareKeyStuffs(inputHandler, mv)){ //if the directions ARE the same
+                return false;
+            }
+        }
         return true;
     }
 
 
 
-    void MovementCheck() {
+    List<Vector2> MovementCheck() {
         //Debug.Log("testc");
         //cast 8 rays for info
         List<Vector2> unallowedDirs = new List<Vector2>();
@@ -142,75 +149,8 @@ public class PlayerHandler : MonoBehaviour
         if(Physics2D.Raycast(transform.position, moveToDirVec[MoveDirs.DOWN], 1f, layerMask)) unallowedDirs.Add(moveToDirVec[MoveDirs.DOWN]);        
         if(Physics2D.Raycast(transform.position, moveToDirVec[MoveDirs.DOWNRIGHT], 1f, layerMask)) unallowedDirs.Add(moveToDirVec[MoveDirs.DOWNRIGHT]);     
 
-        foreach(Vector2 hit in unallowedDirs){
-            Debug.Log(hit);
-            // if(hit.collider.tag == "Wall") {
-            //     unallowedDirs.Add(hit.transform.eulerAngles);
-            //     Debug.Log(hit.point);
-            // }
-        }
-
-
+        return unallowedDirs;
     }
-
-    void DealWithWall() {
-        //or if only a single key is pressed
-        
-
-        //check if both keys pressed at same time
-        if(lastX != 0 && lastY != 0) {
-          //  Debug.Log("both key axis pressed");
-            if(!(CompareKeyPresses(inputHandler.x, lastX) && inputHandler.y == 0
-                || inputHandler.x == 0 && CompareKeyPresses(inputHandler.y, lastY)
-                || CompareKeyPresses(inputHandler.x, lastX) && CompareKeyPresses(inputHandler.y, lastY))) {
-                    transform.Translate(inputHandler * Time.deltaTime, Space.World);
-                    //Debug.Log("move successful");
-                }
-            
-        } else if (lastX != 0 && lastY == 0) { //if only one of a d
-            //Debug.Log("a or d pressed");
-            if(!(CompareKeyPresses(inputHandler.x, lastX))) { //only move if a or d isnt pressed
-                transform.Translate(inputHandler * Time.deltaTime, Space.World);
-             //   Debug.Log("move successful, input x:" + inputHandler.x);
-            } 
-            // else if () { //pressing two keys at once, go respectively up or down
-
-            // }
-            
-        }else if (lastX == 0 && lastY != 0) { // if only one of w 
-           // Debug.Log("w or s pressed");
-            if(!(CompareKeyPresses(inputHandler.y, lastY))) { //only move if a or d isnt pressed
-                transform.Translate(inputHandler * Time.deltaTime, Space.World);
-                //Debug.Log("move successful, input y:" + inputHandler.y);
-
-            }
-
-        } 
-            
-    }
-
-    float lastX;
-    float lastY;
-
-    void OnTriggerEnter2D(Collider2D collider) {
-        if(collider.tag == "Wall") {
-            lastX = inputHandler.x;
-            lastY = inputHandler.y;
-            Debug.Log("entered wall, dir " + lastX + " ," + lastY);
-            atWall = true;
-            
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D collider) {
-        if(collider.tag == "Wall") {
-            Debug.Log("exited wall");
-            atWall = false;
-            
-        }
-    }
-
-
 
     //upon approaching an item
     private void InteractWithItem() {

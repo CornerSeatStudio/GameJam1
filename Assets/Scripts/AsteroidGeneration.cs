@@ -5,6 +5,7 @@ using UnityEngine;
 public class AsteroidGeneration : MonoBehaviour
 {
 
+    public PlayerHandler player;
 
     public float asteroidCount;
 
@@ -26,7 +27,14 @@ public class AsteroidGeneration : MonoBehaviour
     void GenerateAsteroids()
     {
         for(int i = 0; i < asteroidCount; ++i) {
-            Vector2 pos = new Vector2(Random.Range(widthBounds.x, widthBounds.y), Random.Range(heightBounds.x, heightBounds.y));
+            Vector2 pos;
+            while (true){
+                pos = new Vector2(Random.Range(widthBounds.x, widthBounds.y), Random.Range(heightBounds.x, heightBounds.y));
+                if(Vector2.Distance(pos, player.transform.position) > 100f){
+                    break;
+                }
+            }
+
             GameObject go = Instantiate(asteroidPrefabs[Random.Range(0, asteroidPrefabs.Count)], pos, Quaternion.identity);
             //calculate random size
             float temp = Random.Range(-randomSizeOffset, randomSizeOffset);

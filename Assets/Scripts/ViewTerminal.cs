@@ -35,6 +35,7 @@ public class ViewTerminal : Interactable
     }
 
     protected override void OnTriggerEnter2D(Collider2D col) {
+       // Debug.Log("dsaifj");
         if(col.gameObject.tag == "Player") interactKey.SetActive(true);
     }
 
