@@ -19,9 +19,10 @@ public class ThrusterTerminal : Interactable //goes on each terminal
     private Item currItem;
     private IEnumerator mainBurstCoroutine;
 
+    public GameObject terminals;
     protected void Start(){
         interactKey.SetActive(false);
-        
+        terminals.SetActive(false);
         //start thruster coroutine
         mainBurstCoroutine = BurstDriver();
         ThrustLeft.SetActive(false);
@@ -57,6 +58,8 @@ public class ThrusterTerminal : Interactable //goes on each terminal
     protected void AddToInteractable(Item item) {
         currItem = item;
         Debug.Log("item " + currItem.name + " added to console");
+        terminals.SetActive(true);
+        StartCoroutine(StopSoundAfterTime2(2));
         player.CurrItem = null;
     }
 
@@ -121,5 +124,10 @@ public class ThrusterTerminal : Interactable //goes on each terminal
         yield return new WaitForSeconds(audiotime);
         ThrustLeft.SetActive(false);
     }
+    private IEnumerator StopSoundAfterTime2(float audiotime){
+        yield return new WaitForSeconds(audiotime);
+        ThrustLeft.SetActive(false);
+    }
+
 
 }
