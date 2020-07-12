@@ -64,9 +64,15 @@ TagManager:
   - name: Player
     uniqueID: 675968845
     locked: 0
-  - name: ui
+  - name: in game ui
     uniqueID: 4137854149
     locked: 0
   - name: ship exterior
     uniqueID: 261135283
+    locked: 0
+  - name: inner bar
+    uniqueID: 1502126771
+    locked: 0
+  - name: outer main ui
+    uniqueID: 3411901119
     locked: 0
