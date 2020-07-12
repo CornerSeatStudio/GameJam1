@@ -24,7 +24,6 @@ public class ThrusterTerminal : Interactable //goes on each terminal
     private IEnumerator mainBurstCoroutine;
 
     public GameObject terminalsAdd;
-
     public GameObject terminalsRetrieve;
     public GameObject terminalsSwap;
     protected void Start(){
@@ -66,7 +65,7 @@ public class ThrusterTerminal : Interactable //goes on each terminal
     //if i access terminal with no item
     public override void Interact() {
         if(currItem == null) {
-            Debug.Log("no item in terminal");
+        //    Debug.Log("no item in terminal");
         } else {
             RetrieveFromInteractable();
             terminalsRetrieve.SetActive(true);
@@ -93,23 +92,43 @@ public class ThrusterTerminal : Interactable //goes on each terminal
     protected void AddToInteractable(Item item) {
         item.OnUse();
         currItem = item;
-        Debug.Log("item " + currItem.name + " added to console");
+       // Debug.Log("item " + currItem.name + " added to console");
+
+        if(currItem is ThrustHastener && instaBurst == null){
+            Debug.Log("instaBurst");
+            instaBurst = IBurst();
+            StartCoroutine(instaBurst);
+        }
 
         player.CurrItem = null;
     }
 
     protected void SwapWithInteractable(Item item){
         item.OnUse();
-        Debug.Log("Swapping item " + currItem.name + " with " + item.name);
+       // Debug.Log("Swapping item " + currItem.name + " with " + item.name);
         Item temp = currItem;
         currItem = item;
         player.CurrItem = temp;
         player.CurrItem.OnPickup();
 
+        if(currItem is ThrustHastener && instaBurst == null){
+            Debug.Log("instaBurst");
+            instaBurst = IBurst();
+            StartCoroutine(instaBurst);
+        }
+
+    }
+
+    public IEnumerator instaBurst;
+
+    IEnumerator IBurst(){
+        Burst();
+        yield return new WaitForSeconds(3f);
+        instaBurst = null;
     }
 
     protected void RetrieveFromInteractable(){
-        Debug.Log("curr item " + currItem.name + " retrieved");
+      //  Debug.Log("curr item " + currItem.name + " retrieved");
         player.CurrItem = currItem;
         currItem = null;
         player.CurrItem.OnPickup();
@@ -120,6 +139,7 @@ public class ThrusterTerminal : Interactable //goes on each terminal
 
     public IEnumerator BurstDriver() {
         while(true) {
+
             if(localBurstCoroutine != null) { //for interupts
                 if(currItem is ThrustHalter) { //for the interuppts
                     StopCoroutine(localBurstCoroutine);

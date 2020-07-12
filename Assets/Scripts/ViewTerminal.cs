@@ -42,7 +42,7 @@ public class ViewTerminal : Interactable
     protected override void OnTriggerExit2D(Collider2D col) {
         if(col.gameObject.tag == "Player") {
             interactKey.SetActive(false);
-            if (isOpened) OnClose();
+            if (isOpened) OnClose(); isOpened = false;
         } 
 
        // Debug.Log("left view terminal");
@@ -58,9 +58,6 @@ public class ViewTerminal : Interactable
             isOpened = true;
             OnOpen();
         }
-
-
-        
 
     }
 

@@ -10,7 +10,7 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     public void Quit(){
-        Debug.Log("Quit");
+        //Debug.Log("Quit");
         Application.Quit();
     }
     public void BackMenu(){
@@ -19,7 +19,7 @@ public class Menu : MonoBehaviour
     public void restart(){
         string scene=SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(scene);
-        Debug.Log("Restart");
+        //Debug.Log("Restart");
     }
     public void QuitToMenu(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);

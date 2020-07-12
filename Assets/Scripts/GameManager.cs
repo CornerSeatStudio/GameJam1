@@ -14,15 +14,22 @@ public class GameManager : MonoBehaviour
     public FinishLine finish;
     public Image distanceImage;
 
+    public GameObject mainUI;
+    public GameObject winScreen;
+
+
     private IEnumerator currDistCoroutine;
  
 
     public void OnWin() {   
         Debug.Log("reached finish line");
         StopCoroutine(currDistCoroutine);
-        //display UI
-        //show score
-        //restart or main menu
+        
+        
+        mainUI.SetActive(false) ;               winScreen.transform.parent = null;
+
+        winScreen.SetActive(true);
+
 
     }
 

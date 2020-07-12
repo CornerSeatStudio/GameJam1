@@ -16,7 +16,11 @@ public class ShipHandler : MonoBehaviour
     private Rigidbody2D rb;
     private float currHealth;
 
+    public GameObject hitSound;
+
     void Awake() {
+
+        hitSound.SetActive(false);
         //dont show broken ship;
         foreach(GameObject go in brokenShipParts){
             go.gameObject.SetActive(false);
@@ -37,17 +41,14 @@ public class ShipHandler : MonoBehaviour
 
     }
 
-    void Update()
-{
-    // if(Input.GetButtonDown("Fire1")){
-    //     ShipDeath();
-    // }
-}
+
 
     void OnCollisionEnter2D(Collision2D col) {
         if(col.gameObject.tag == "Asteroid"){
             currHealth -= col.collider.gameObject.GetComponent<Asteroid>().GetAsteroidDamage();
             healthbar.fillAmount = currHealth / maxHealth;
+
+            StartCoroutine(bonkTimer());
 
           //  Debug.Log(currHealth);
             if (currHealth <= 0) {
@@ -57,12 +58,19 @@ public class ShipHandler : MonoBehaviour
         }
     }
 
+    public IEnumerator bonkTimer(){
+        hitSound.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        hitSound.SetActive(false);
+    }
+
     public void MoveShip(ThrusterTerminal thruster){
         //Debug.Log("moving ship: " + thruster.burstDirection);
         //if the ship is too fast, dont add force, but still do particle effect
-
+        if(rb.velocity.magnitude < maxSpeed){
+            rb.AddForce(thruster.burstDirection * thrusterForce, ForceMode2D.Impulse);
+        }
         StartCoroutine(ParticleLoop(thruster));
-       // rb.AddForce(thruster.burstDirection * thrusterForce, ForceMode2D.Impulse);
 
     }
 
@@ -71,14 +79,14 @@ public class ShipHandler : MonoBehaviour
         foreach(ParticleSystem p in thruster.thrustParticles) {
             p.Play();
         }
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         foreach(ParticleSystem p in thruster.thrustParticles) {
             p.Stop();
         }
     }
 
     private void ShipDeath(){
-        Debug.Log("deidZD");
+        ///Debug.Log("deidZD");
         mainUI.SetActive(false);
 
         deathMenu.transform.parent = null;

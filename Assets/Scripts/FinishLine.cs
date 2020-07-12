@@ -8,7 +8,6 @@ public class FinishLine : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col) { //upon reaching the finish zone, do a thing
         if(col.gameObject.tag == "Ship") {
             manager.OnWin();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 }
