@@ -8,7 +8,7 @@ public class AsteroidGeneration : MonoBehaviour
 
     public float asteroidCount;
 
-    public GameObject asteroidPrefab;
+    public List<GameObject> asteroidPrefabs;
 
     public float randomSizeOffset;
 
@@ -27,8 +27,7 @@ public class AsteroidGeneration : MonoBehaviour
     {
         for(int i = 0; i < asteroidCount; ++i) {
             Vector2 pos = new Vector2(Random.Range(widthBounds.x, widthBounds.y), Random.Range(heightBounds.x, heightBounds.y));
-            
-            GameObject go = Instantiate(asteroidPrefab, pos, Quaternion.identity);
+            GameObject go = Instantiate(asteroidPrefabs[Random.Range(0, asteroidPrefabs.Count)], pos, Quaternion.identity);
             //calculate random size
             float temp = Random.Range(-randomSizeOffset, randomSizeOffset);
             float newx = go.transform.localScale.y + temp;
