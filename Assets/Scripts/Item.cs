@@ -7,6 +7,9 @@ public abstract class Item : MonoBehaviour
 {
 
     public GameObject keySprite;
+    public PlayerHandler player;
+
+    public bool isHeld {get; private set;} = false;
 
     protected virtual void Start() {
         keySprite.SetActive(false);
@@ -24,18 +27,22 @@ public abstract class Item : MonoBehaviour
         }
     }
 
-    public virtual void OnPickup() {
-        Debug.Log("destroying");
+    public void Update() {
+        if(isHeld) {
+            transform.position = Vector3.Lerp(transform.position, player.transform.position + new Vector3(0, 1, 0), .2f);
+        }
+    }
 
-        //hide it
-        this.gameObject.SetActive(false);
+    public virtual void OnPickup() {
+        this.gameObject.SetActive(true);
+        isHeld = true;
     }
 
     public virtual void OnDrop() {
-        //show it
-        Debug.Log("creating");
-        this.gameObject.SetActive(true);
+        isHeld = false;
+    }
 
-
+    public virtual void OnUse() {
+        this.gameObject.SetActive(false);
     }
 }

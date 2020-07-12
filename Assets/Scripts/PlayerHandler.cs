@@ -97,29 +97,29 @@ public class PlayerHandler : MonoBehaviour
 
         //check if both keys pressed at same time
         if(lastX != 0 && lastY != 0) {
-            Debug.Log("both key axis pressed");
+          //  Debug.Log("both key axis pressed");
             if(!(CompareKeyPresses(inputHandler.x, lastX) && inputHandler.y == 0
                 || inputHandler.x == 0 && CompareKeyPresses(inputHandler.y, lastY)
                 || CompareKeyPresses(inputHandler.x, lastX) && CompareKeyPresses(inputHandler.y, lastY))) {
                     transform.Translate(inputHandler * Time.deltaTime, Space.World);
-                    Debug.Log("move successful");
+                    //Debug.Log("move successful");
                 }
             
         } else if (lastX != 0 && lastY == 0) { //if only one of a d
-            Debug.Log("a or d pressed");
+            //Debug.Log("a or d pressed");
             if(!(CompareKeyPresses(inputHandler.x, lastX))) { //only move if a or d isnt pressed
                 transform.Translate(inputHandler * Time.deltaTime, Space.World);
-                Debug.Log("move successful, input x:" + inputHandler.x);
+             //   Debug.Log("move successful, input x:" + inputHandler.x);
             } 
             // else if () { //pressing two keys at once, go respectively up or down
 
             // }
             
         }else if (lastX == 0 && lastY != 0) { // if only one of w 
-            Debug.Log("w or s pressed");
+           // Debug.Log("w or s pressed");
             if(!(CompareKeyPresses(inputHandler.y, lastY))) { //only move if a or d isnt pressed
                 transform.Translate(inputHandler * Time.deltaTime, Space.World);
-                Debug.Log("move successful, input y:" + inputHandler.y);
+                //Debug.Log("move successful, input y:" + inputHandler.y);
 
             }
 
@@ -164,14 +164,13 @@ public class PlayerHandler : MonoBehaviour
     private void DealWithItem(Item item) {
         if(CurrItem != null) DropCurrItem(); //if im holding an item, swap it off
         CurrItem = item;
-        item.OnPickup();        
+        CurrItem.OnPickup();        
     }
 
     //dropping the item
     private void DropCurrItem(){
         CurrItem.OnDrop();
         CurrItem.transform.position = transform.position; //move it to the right place
-        Debug.Log(CurrItem.transform.position + " vs " + transform.position);
         CurrItem = null;
     }
 

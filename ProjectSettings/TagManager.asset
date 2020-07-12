@@ -49,6 +49,9 @@ TagManager:
   - name: Background
     uniqueID: 4257587099
     locked: 0
+  - name: backgroundMoon
+    uniqueID: 1806284971
+    locked: 0
   - name: Asteroid
     uniqueID: 2000596797
     locked: 0

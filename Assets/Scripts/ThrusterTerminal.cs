@@ -12,9 +12,13 @@ public class ThrusterTerminal : Interactable //goes on each terminal
     public float targetBurstRandomnessRange; //+- the BurstTime (MUST BE < THAN TARGETBURSTTIME)
     public Vector2 burstDirection;
     public BurstEvent burstEvent;
-    public GameObject ThrustLeft;
+    public GameObject Thrust;
     public List<ParticleSystem> thrustParticles;
     public GameObject interactKey;
+
+    public Sprite normalTerminal;
+    public Sprite fuelTerminal;
+    public Sprite wrenchTerminal;
 
     private Item currItem;
     private IEnumerator mainBurstCoroutine;
@@ -30,18 +34,34 @@ public class ThrusterTerminal : Interactable //goes on each terminal
         terminalsRetrieve.SetActive(false);
         //start thruster coroutine
         mainBurstCoroutine = BurstDriver();
-        ThrustLeft.SetActive(false);
+        Thrust.SetActive(false);
         StartCoroutine(mainBurstCoroutine);
     }
 
+    public void onDeathEvent(){
+        //stop all coroutines
+        if(mainBurstCoroutine != null) StopCoroutine(mainBurstCoroutine);
+        if(localBurstCoroutine != null) StopCoroutine(localBurstCoroutine);
+    }
+
     protected override void OnTriggerEnter2D(Collider2D col) {
-        if(col.gameObject.tag == "Player") interactKey.SetActive(true);
+        if(col.gameObject.tag == "Player" && (player.CurrItem != null || currItem != null)) interactKey.SetActive(true);
     }
 
     protected override void OnTriggerExit2D(Collider2D col) {
         if(col.gameObject.tag == "Player") interactKey.SetActive(false);
     }
     
+    private void UpdateSprite(){
+        //check respective item and do accordingly
+        if (currItem is ThrustHalter) {
+            this.GetComponent<SpriteRenderer>().sprite = wrenchTerminal;
+        } else if (currItem is ThrustHastener) {
+            this.GetComponent<SpriteRenderer>().sprite = fuelTerminal;
+        } else {
+            this.GetComponent<SpriteRenderer>().sprite = normalTerminal;
+        }
+    }
 
     //if i access terminal with no item
     public override void Interact() {
@@ -52,6 +72,8 @@ public class ThrusterTerminal : Interactable //goes on each terminal
             terminalsRetrieve.SetActive(true);
             StartCoroutine(StopSoundAfterTime2(0.5f));
         }
+        
+        UpdateSprite();
     }
 
     public void Interact(Item item) {
@@ -64,9 +86,12 @@ public class ThrusterTerminal : Interactable //goes on each terminal
             terminalsSwap.SetActive(true);
             StartCoroutine(StopSoundAfterTime2(1f));
         }
+
+        UpdateSprite();
     }
 
     protected void AddToInteractable(Item item) {
+        item.OnUse();
         currItem = item;
         Debug.Log("item " + currItem.name + " added to console");
 
@@ -74,10 +99,12 @@ public class ThrusterTerminal : Interactable //goes on each terminal
     }
 
     protected void SwapWithInteractable(Item item){
+        item.OnUse();
         Debug.Log("Swapping item " + currItem.name + " with " + item.name);
         Item temp = currItem;
         currItem = item;
         player.CurrItem = temp;
+        player.CurrItem.OnPickup();
 
     }
 
@@ -85,6 +112,7 @@ public class ThrusterTerminal : Interactable //goes on each terminal
         Debug.Log("curr item " + currItem.name + " retrieved");
         player.CurrItem = currItem;
         currItem = null;
+        player.CurrItem.OnPickup();
     }
 
 
@@ -127,12 +155,12 @@ public class ThrusterTerminal : Interactable //goes on each terminal
 
     private void Burst() {
         burstEvent.Invoke(this);
-        ThrustLeft.SetActive(true);
+        Thrust.SetActive(true);
         StartCoroutine(StopSoundAfterTime(3));
     }
     private IEnumerator StopSoundAfterTime(float audiotime){
         yield return new WaitForSeconds(audiotime);
-        ThrustLeft.SetActive(false);
+        Thrust.SetActive(false);
     }
     private IEnumerator StopSoundAfterTime2(float audiotime){
         yield return new WaitForSeconds(audiotime);
